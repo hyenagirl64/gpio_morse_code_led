@@ -42,13 +42,32 @@ class MorseTranslator:
                 "7" : self.seven,
                 "8" : self.eight,
                 "9" : self.nine,
-                "0" : self.zero
+                "0" : self.zero,
+                "." : self.period,
+                "," : self.comma,
+                "?" : self.question_mark,
+                "'" : self.apostrophe,
+                "!" : self.exclamation_point,
+                "/" : self.slash,
+                "(" : self.open_parenthesis,
+                ")" : self.close_parenthesis,
+                "&" : self.ampersand,
+                ":" : self.colon,
+                ";" : self.semicolon,
+                "=" : self.double_dash,
+                "+" : self.plus,
+                "-" : self.hyphen_or_minus,
+                "_" : self.underscore,
+                '"' : self.quotation_mark,
+                "$" : self.dollar_sign,
+                "@" : self.at_sign    
             }
 
     def is_valid_input(self, message):
-        for character in message:
-            if not character in self.encoding_table:
-                return False
+        for word in message.lower().split():
+            for character in word:
+                if not character in self.encoding_table:
+                    return False
         return len(message) > 0           
         
 
@@ -79,11 +98,11 @@ class MorseTranslator:
     def encode_signal(self , signal):
         if not self.is_valid_input(signal):
             raise ValueError("Cannot Send: Invalid Message")    
-        self.start()
+        self.attention()
         self.space_w()
         self.encode_message(signal.strip())
         self.space_w()
-        self.end()
+        self.over_and_out()
         
 
     def tap(self):
@@ -110,22 +129,75 @@ class MorseTranslator:
         time.sleep(7 * self.time_unit)
 
 
-    def start(self):
-        self.dash()
-        self.dot()
-        self.dash()
-        self.dot()
-        self.dash(True)
+    # Prosigns
+    def attention(self):
+        self.k()
+        self.tap()
+        self.a()
+
+    def new_message(self):
+        self.r()
+        self.tap()
+        self.n()
+
+    def over(self):
+        self.k()
+
+    def out(self):
+        self.a()
+        self.tap()
+        self.r()
         
-    def end(self):
-        self.dot()
-        self.dot()
-        self.dot()
-        self.dash()
-        self.dot()
-        self.dash(True)
+    def over_and_out(self):
+        self.s()
+        self.tap()
+        self.k()
+
+    def roger(self):
+        self.r()
+
+    def verified(self):
+        self.v()
+        self.tap()
+        self.e()
+
+    def break_section(self):
+        self.b()
+        self.tap()
+        self.t()
+
+    def wait(self):
+        self.a()
+        self.tap()
+        self.s()
+
+    def wait_out(self):
+        self.wait()
+        self.space_l()
+        self.out()
+
+    def say_again(self):
+        self.question_mark()
+
+    def interrogative(self):
+        self.i()
+        self.tap()
+        self.n()
+        self.tap()
+        self.t()       
+
+    def correction(self):
+        self.h()
+        self.tap()
+        self.h()
+        
+    def disregard_last_transmission(self):
+        self.corection()
+        self.space_l()
+        self.out()
         
 
+    #alpha-numeric and symbols
     def a(self):
         self.dot()
         self.dash(True)
@@ -329,4 +401,125 @@ class MorseTranslator:
         self.dash()
         self.dash()
         self.dash(True)
+
+    def period(self):
+        self.dot()
+        self.dash()
+        self.dot()
+        self.dash()
+        self.dot()
+        self.dash(True)
+
+    def comma(self):
+        self.dash()
+        self.dash()
+        self.dot()
+        self.dot()
+        self.dash()
+        self.dash()
+
+    def question_mark(self):
+        self.dot()
+        self.dot()
+        self.dash()
+        self.dash()
+        self.dot()
+        self.dot(True)
+
+    def apostrophe(self):
+        self.dot()
+        self.dash()
+        self.dash()
+        self.dash()
+        self.dash()
+        self.dot(True)
+
+    def exclamation_point(self):
+        self.k()
+        self.tap()
+        self.w()
+
+    def slash(self):
+        self.d()
+        self.tap()
+        self.n()
+
+    def open_parenthesis(self):
+        self.k()
+        self.tap()
+        self.n()
+
+    def close_parenthesis(self):
+        self.dash()
+        self.dot()
+        self.dash()
+        self.dash()
+        self.dot()
+        self.dash(True)
+
+    def ampersand(self):
+        self.a()
+        self.tap()
+        self.s()
+
+    def colon(self):
+        self.dash()
+        self.dash()
+        self.dash()
+        self.dot()
+        self.dot()
+        self.dot(True)
+
+    def semicolon(self):
+        self.dash()
+        self.dot()
+        self.dash()
+        self.dot()
+        self.dash()
+        self.dot(True)
+
+    def double_dash(self):
+        self.b()
+        self.tap()
+        self.t()
+
+    def plus(self):
+        self.r()
+        self.tap()
+        self.n()
+
+    def hyphen_or_minus(self):
+        self.dash()
+        self.dot()
+        self.dot()
+        self.dot()
+        self.dash(True)
+
+    def underscore(self):
+        self.dot()
+        self.dot()
+        self.dash()
+        self.dash()
+        self.dot()
+        self.dash(True)
+
+    def quotation_mark(self):
+        self.dot()
+        self.dash()
+        self.dot()
+        self.dot()
+        self.dash()
+        self.dot(True)
+
+    def dollar_sign(self):
+        self.d()
+        self.tap()
+        self.x()
+
+    def at_sign(self):
+        self.a()
+        self.tap()
+        self.c()
+        
+        
 

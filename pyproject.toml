@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gpio_morse_code_led"
+version = "0.0.1"
+authors = [
+  { name="Hyenagirl64", email="danielsj64@gmail.com" },
+]
+description = "Command line morse code application for GPIO"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: ASUS Tinkerboard",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/hyenagirl64/gpio_morse_code_led"
+"Bug Tracker" = "https://github.com/hyenagirl64/gpio_morse_code_led/issues"
