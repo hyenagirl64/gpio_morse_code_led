@@ -2,10 +2,11 @@ import time
 
 class MorseTranslator:
 
-    def __init__(self, time_unit, on, off):
+    def __init__(self, ident, time_unit, on, off):
         self.time_unit = time_unit
         self.on = on
         self.off = off
+        self.ident = ident.strip()
         self.encoding_table = {
                 "a" : self.a,
                 "b" : self.b,
@@ -28,7 +29,7 @@ class MorseTranslator:
                 "s" : self.s,
                 "t" : self.t,
                 "u" : self.u,
-                "p" : self.p,
+                "v" : self.v,
                 "w" : self.w,
                 "x" : self.x,
                 "y" : self.y,
@@ -102,8 +103,35 @@ class MorseTranslator:
         self.space_w()
         self.encode_message(signal.strip())
         self.space_w()
-        self.over_and_out()
+        self.over()
+
+    def sign_on(self):
+        self.c()
+        self.space_l()
+        self.q()
+        self.space_w()
+        self.from_station()
+        self.space_w()
+        self.over()
         
+
+    def sign_off(self):
+        self.c()
+        self.space_l()
+        self.l()
+        self.from_station()
+        self.space_w()
+        self.over_and_out()
+
+    def from_station(self):
+        self.d()
+        self.space_l()
+        self.e()
+        self.space_w()
+        self.identity()
+        
+    def identity(self):
+        self.encode_message(self.ident)
 
     def tap(self):
         time.sleep(1 * self.time_unit)
