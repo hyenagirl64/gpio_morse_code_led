@@ -3,6 +3,8 @@ import time
 class MorseTranslator:
 
     def __init__(self, ident, time_unit, on, off):
+        # a time_unit = 60 / (50 * WPM) where WPM is "Words Per Minute"
+        # WPM should not go above 20
         self.time_unit = time_unit
         self.on = on
         self.off = off
@@ -100,19 +102,31 @@ class MorseTranslator:
         if not self.is_valid_input(signal):
             raise ValueError("Cannot Send: Invalid Message")    
         self.attention()
+        self.from_part()
+        self.space_w()
+        self.identity(3)
+        self.break_section()
         self.space_w()
         self.encode_message(signal.strip())
         self.space_w()
-        self.over()
+        self.from_part()
+        self.space_w()
+        self.identity(1)
+        self.space_w()
+        self.over_public()
 
     def sign_on(self):
-        self.c()
-        self.space_l()
-        self.q()
+        self.call_all()
         self.space_w()
-        self.from_station()
+        self.call_all()
         self.space_w()
-        self.over()
+        self.call_all()
+        self.space_w()
+        self.from_part()
+        self.space_w()
+        self.identity(3)
+        self.space_w()
+        self.over_public()
         
 
     def sign_off(self):
@@ -124,14 +138,15 @@ class MorseTranslator:
         self.over_and_out()
 
     def from_station(self):
-        self.d()
-        self.space_l()
-        self.e()
+        self.from_part()
         self.space_w()
         self.identity()
         
-    def identity(self):
-        self.encode_message(self.ident)
+    def identity(self, repeats=1):
+        for i in range(repeats):
+            self.encode_message(self.ident)
+            if i < repeats - 1 :
+                self.space_w()
 
     def tap(self):
         time.sleep(1 * self.time_unit)
@@ -158,6 +173,16 @@ class MorseTranslator:
 
 
     # Prosigns
+    def call_all(self):
+        self.c()
+        self.space_l()
+        self.q()
+
+    def from_part(self):
+        self.d()
+        self.space_l()
+        self.e()
+    
     def attention(self):
         self.k()
         self.tap()
@@ -168,8 +193,13 @@ class MorseTranslator:
         self.tap()
         self.n()
 
-    def over(self):
+    def over_public(self):
         self.k()
+
+    def over_private(self):
+        self.k()
+        self.tap()
+        self.n()
 
     def out(self):
         self.a()

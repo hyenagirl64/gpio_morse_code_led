@@ -13,13 +13,8 @@ def main():
 
         ledPin = 12
         buzzerPin = 35
-        GPIO.setup(ledPin, GPIO.OUT)
-        GPIO.setup(buzzerPin, GPIO.OUT)
-        
-        GPIO.output(buzzerPin, GPIO.LOW)
-        GPIO.output(ledPin, GPIO.LOW)
-
-        
+        GPIO.setup(ledPin, GPIO.OUT, initial = GPIO.LOW)
+        GPIO.setup(buzzerPin, GPIO.OUT, initial = GPIO.LOW)
 
         def on():
             GPIO.output(ledPin, GPIO.HIGH)
@@ -31,7 +26,7 @@ def main():
 
         ident = input("Enter 4-5 Character Callsign\n")
         ident = ident.strip()
-        translator = morse.MorseTranslator(ident, 0.1, on, off)
+        translator = morse.MorseTranslator(ident, 0.065, on, off)
         print("Calling All Stations From " + ident + "...")
         translator.sign_on()
 
@@ -51,6 +46,10 @@ def main():
         print("Closing Station " + ident + "...")
         translator.sign_off()
         print("Over and Out!")
+        
+        #added a little time here to give to 100 micro Farad capacitor time to discharge
+        #without this, the buzzer gets a little whistle at the end
+        time.sleep(0.5)
     except Exception as e:
             print(str(e))
     finally:
