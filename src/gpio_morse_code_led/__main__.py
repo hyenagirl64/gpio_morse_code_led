@@ -11,18 +11,14 @@ def main():
         GPIO.setmode(GPIO.BOARD)
         GPIO.setwarnings(False)
 
-        ledPin = 12
-        buzzerPin = 35
-        GPIO.setup(ledPin, GPIO.OUT, initial = GPIO.LOW)
-        GPIO.setup(buzzerPin, GPIO.OUT, initial = GPIO.LOW)
+        beeperPin = 11
+        GPIO.setup(beeperPin, GPIO.OUT, initial = GPIO.LOW)
 
         def on():
-            GPIO.output(ledPin, GPIO.HIGH)
-            GPIO.output(buzzerPin, GPIO.HIGH)
+            GPIO.output(beeperPin, GPIO.HIGH)
 
         def off():
-            GPIO.output(ledPin, GPIO.LOW)
-            GPIO.output(buzzerPin, GPIO.LOW)
+            GPIO.output(beeperPin, GPIO.LOW)
 
         ident = input("Enter 4-5 Character Callsign\n")
         ident = ident.strip()
